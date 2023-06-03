@@ -1,0 +1,9 @@
+main_config:
+  - 1
+  - 2
+  - 3
+  - 4
+main_dict:
+  first: 1
+  second: 2
+  third: 3

@@ -1,0 +1,17 @@
+updater_config_path: store/config.yaml
+subaccount: HFT
+
+
+class_attributes:
+  restore_path: store/checkpoints/restore_position_dict.json
+  checkpoint_path: store/checkpoints/backup_position_dict.json
+  activate_interactor: True
+  clean_open_orders: True
+  unit_factor: 0.025
+  n_exit_points: 3
+  colleterized_factor: 4
+  colleterized_factor_priority: 8
+  max_position_number: 45
+  is_near_zone: 0.05
+  max_drawdown: 0.5
+initialization_config:

@@ -1,0 +1,25 @@
+updater_config_path: store/config.yaml
+subaccount: HFT
+
+
+class_attributes:
+  restore_path: store/checkpoints/restore_position_dict.json
+  checkpoint_path: store/checkpoints/backup_position_dict.json
+  activate_interactor: True
+  clean_open_orders: True
+  unit_factor: 0.025
+  n_exit_points: 3
+  colleterized_factor: 4
+  colleterized_factor_priority: 8
+  max_position_number: 45
+  is_near_zone: 0.05
+  max_drawdown: 0.5
+initialization_config:
+
+
+
+  unit_value_factors_high: list(np.concatenate([([i]*10) for i in [0.04, 0.03,0.02,0.015, 0.01]], axis=0))
+  unit_value_factors_low= list(np.concatenate([([i]*10) for i in [0.02, 0.015,0.01,0.075, 0.005]], axis=0))
+  unit_value_factors: unit_value_factors_high if use_high_unit_value else unit_value_factors_low
+  dca_level_risk: {0:0, 1:0.5,2:1.5,3:2.8,4:4.35,5:5.78,6:5.78,7:5.78}
+  print(f"[{subaccount} initialized in swing_strategy_light")

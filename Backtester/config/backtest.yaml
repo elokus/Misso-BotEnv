@@ -1,0 +1,10 @@
+exchange: bybit
+markets: BTC/USDT:USDT
+start_date: 01.10.2022
+end_date: 30.11.2022
+dtime: 1m
+indicator: waves_report
+capital: 1000
+
+
+

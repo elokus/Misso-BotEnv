@@ -1,0 +1,59 @@
+class_attributes:
+  subaccount: HFT
+  proc_name: None
+  interactor: None
+  activate_interactor: True
+  interactions: []
+  #dicts (define here or in strategy config)
+  system_status: {}
+  positions: {}
+  open_orders: []
+  is_open_orders: {}
+  is_open_positions: {}
+  last_price: {}
+  current_ranges: {}
+  closed_trades: []
+  wl_ranges: None
+  wl_restricted: ["BNB/USD:USD", "USDT/USD:USD"]
+  watch_list_filter: {info.volumeUsd24h: {value: 2000000, type: greater_or_equal, value_type: float}}
+  watch_list: None
+  total_capital: 0
+  free_capital: 0
+  leverage: 20
+  initial_capital: 0
+shared_attributes:
+  pending_orders:
+    modul: queue
+    function: Queue
+tasks:
+  t_init_update:
+    input_args: None
+    name: init_update
+    freq: None
+  # im Folgenden werden die subtasks der initialen datenbeschaffung aufgelisted + konfiguriert. NOTE: einmalige Task!
+    subtasks:
+      sub_open_positions: { type: async, modul: Misso.services.async_helper, method: get_open_positions,
+                            input_args: [ self.aftx ], target_attr: is_open_positions, target_save_update: False, return_value: True }
+      sub_update_candles: { type: async, modul: Misso.services.async_helper, method: get_ohlcv_data,
+                            input_args: [self.aftx, self.watch_list, "1m", 20], target_attr: candles, target_save_update: True, return_value: True }
+      sub_total_balance: {type: async, modul: Misso.services.async_helper, method: get_total_balance, input_args: [self.aftx],
+                  target_attr: total_capital, target_save_update: False, return_value: True}
+      sub_free_balance: {type: async, modul: Misso.services.async_helper, method: get_free_balance, input_args: [self.aftx],
+                  target_attr: free_capital, target_save_update: False, return_value: True}
+  # Hier werden die hintergrund updates definiert im späteren Eventloop
+  t_update_candles:
+    name: update_tickers
+    freq: 5
+    input_args: [self.aftx, self.watch_list, "1m", 20]
+    out: candles
+  t_get_open_positions:
+    name: get_live_positions
+    freq: 10
+  t_update_ticker_ws:
+    name: update_positions_and_ticker
+    freq: 10
+  t_update_orderbook:
+
+
+
+

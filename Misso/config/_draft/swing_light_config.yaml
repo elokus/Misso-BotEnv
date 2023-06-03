@@ -1,0 +1,69 @@
+add_size_factor: 0.05
+range_trades_per_step: 3
+timeout_per_range_trade: 5
+use_last_trades_spread: True
+range_trades:
+  CEL-PERP: 5
+  SNX-PERP: 30
+start_trade:
+  CEL-PERP: False
+  SNX-PERP: False
+start_trade_direction:
+  CEL-PERP: buy
+  SNX-PERP: sell
+n_major_cycle: 5
+min_spread: 0.00
+update_tasks:
+  - t_update_tickers
+  - t_update_balance
+  - t_update_positions
+  - t_update_open_orders_dict
+drawdown_level:
+  0: 0.5
+  1: 1.5
+  2: 2.8
+  3: 4.35
+  4: 5.78
+  5: 5.78
+measurements:
+  - timestamp
+  - cycle_num
+  - proc_name
+  - symbol
+  - subaccount
+  - last_price
+  - next_resistance
+  - next_support
+  - current_range
+  - current_mid
+  - last_trades_spread_rel
+  - last_trades_spread_abs
+  - last_candle_spread
+  - avg_used_spread
+  - free_capital_ratio
+  - is_near_next_resistance
+  - is_broken_resistance
+  - is_near_next_support
+  - is_broken_support
+  - high_target
+  - low_target
+  - closed_buys_counter
+  - closed_sells_counter
+  - opened_orders_counter
+  - pos_price
+  - pos_size
+  - pos_side
+  - pos_value
+  - total_capital
+  - free_capital
+  - leverage
+  - initial_capital
+  - size_ratio
+  - current_spread_avg_ratio
+  - order_value
+  - add_range_shift
+  - shift_ratio
+telegram_handler:
+  activate: True
+  telegram: xxxxxx
+  chat_id: xxxxx

@@ -1,0 +1,79 @@
+strategy_manager_config:
+  subaccounts:
+    - testing_4
+    - testing_3
+    - testing_2
+  storage_dir: storage
+  restore_market_review: False
+  restore_sub_manager: False
+sub_client_configs:
+  default:
+    TIMEFRAMES:
+      - 1m
+      - 15m
+      - 1h
+      - 4h
+    slot_map: {buy: 10, sell: 10, both: 5}
+    BASE_VALUE: 5
+    TARGET_FACTOR: 0.5
+  test_strategy:
+    TIMEFRAMES:
+      - 1m
+      - 15m
+      - 1h
+      - 4h
+    slot_map: {buy: 10, sell: 10, both: 5}
+    BASE_VALUE: 10
+    BASE_TIMEFRAME: 15m
+    TARGET_BY: next
+    TARGET_FACTOR: 0.5
+  testing_2:
+    TIMEFRAMES:
+      - 1m
+      - 15m
+      - 1h
+      - 4h
+    SLOTS: { buy: 10, sell: 10, both: 10}
+    RESTORE: True
+    TIMEOUT: 600
+    CLEAN_AFTER: 7200
+    BASE_VALUE: 10
+    BASE_TIMEFRAME: 15m
+    TARGET_BY: next
+    TARGET_FACTOR: 0.5
+
+  testing_3:
+    TIMEFRAMES:
+      - 1m
+      - 15m
+      - 1h
+      - 4h
+    SLOTS: {buy: 15, sell: 15, both: 5}
+    RESTORE: True
+    TIMEOUT: 0
+    CLEAN_AFTER: 2400
+    BASE_VALUE: 10
+    BASE_TIMEFRAME: 1m
+    TARGET_BY: next
+    TARGET_FACTOR: 0.3
+
+  testing_4:
+    timeframes:
+      - 1m
+      - 15m
+      - 1h
+      - 4h
+    SLOTS: {buy: 15, sell: 15, both: 0}
+    RESTORE: True
+    TIMEOUT: 300
+    CLEAN_AFTER: 5400
+    BASE_VALUE: 10
+    BASE_TIMEFRAME: 1m
+    TARGET_BY: next
+    TARGET_FACTOR: 0.8
+
+
+api_config:
+  apiKey: xxxxx
+  apiSecret: xxxxxx
+

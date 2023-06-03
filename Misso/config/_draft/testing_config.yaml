@@ -1,0 +1,80 @@
+class_attributes:
+  subaccount: test_strategy
+  proc_name: None
+  interactor: None
+  activate_interactor: True
+  interactions: []
+  #dicts (define here or in strategy config)
+  system_status: {}
+  positions: {}
+  open_orders: []
+  is_open_orders: {}
+  is_open_positions: {}
+  last_price: {}
+  current_ranges: {}
+  closed_trades: []
+  wl_ranges: None
+  wl_restricted: ["BNB/USD:USD", "USDT/USD:USD"]
+  watch_list_filter: {info.volumeUsd24h: {value: 2000000, type: greater_or_equal, value_type: float}}
+  watch_list: None
+  total_capital: 0
+  free_capital: 0
+  leverage: 20
+  initial_capital: 0
+shared_attributes:
+  pending_orders:
+    modul: queue
+    function: Queue
+tasks:
+  t_init_update:
+    input_args: None
+    name: init_update
+    freq: None
+    # im Folgenden werden die subtasks der initialen datenbeschaffung aufgelisted + konfiguriert. NOTE: einmalige Task!
+    subtasks:
+      sub_filter_watchlist:
+        type: async
+        modul: Misso.services.async_helper
+        method: get_filtered_watch_list
+        input_args:
+          - self.aftx
+          - self.watch_list_filter
+          - self.wl_restricted
+        target_attr: watch_list
+        target_save_update: False
+        return_value: True
+      # schreibweise im folgenden entspricht im Ergebnis der vorherigen:
+      sub_open_positions: {type: async, modul: Misso.services.async_helper, method: get_open_positions,
+                           input_args: [self.aftx], target_attr: is_open_positions, target_save_update: False, return_value: True}
+      sub_merge_wl_pos: {type: standard, modul: Misso.services.helper, method: extend_list_by_dict_keys,
+                         input_args: [self.watch_list, self.is_open_positions], target_attr: watch_list,
+                         target_save_update: False, return_value: True}
+      sub_ranges: {type: async, modul: Misso.services.async_helper, method: get_current_ranges,
+                   input_args: [self.aftx, self.watch_list], target_attr: wl_ranges, target_save_update: False, return_value: True}
+      sub_price_ticker: {type: async, modul: Misso.services.async_helper, method: get_last_prices_from_watch_list,
+                         input_args: [self.aftx, self.watch_list], target_attr: last_price, target_save_update: False,
+                         return_value: True}
+      sub_total_balance: {type: async, modul: Misso.services.async_helper, method: get_total_balance, input_args: [self.aftx],
+                          target_attr: total_capital, target_save_update: False, return_value: True}
+      sub_free_balance: {type: async, modul: Misso.services.async_helper, method: get_free_balance, input_args: [self.aftx],
+                         target_attr: free_capital, target_save_update: False, return_value: True}
+  # Hier werden die hintergrund updates definiert im späteren Eventloop
+  t_update_tickers:
+    name: update_tickers
+    freq: 20
+    out: self.last_price
+  t_update_open_orders:
+    name: update_open_orders
+    freq: 60
+  t_get_open_orders:
+    name: get_live_orders
+    freq: 60
+  t_get_open_position:
+    name: get_live_positions
+    freq: 60
+  t_update_balance:
+    name: update_balance
+    freq: 60
+
+
+

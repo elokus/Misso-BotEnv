@@ -1,0 +1,33 @@
+Main:
+  subaccount: Main
+  api_key: xxxxx
+  api_secret: xxxxxxx
+SwingBot:
+  subaccount: SwingBot
+  api_key: xxxxxxx
+  api_secret: xxxxxx
+HFT:
+  subaccount: HFT
+  api_key: xxxxxx
+  api_secret: xxxxxx
+test_strategy:
+  subaccount: test_strategy
+  api_key: xxxxxxx
+  api_secret: xxxxxxx
+main:
+  main_api_key: xxxxxx
+  main_api_secret: xxxxxxx
+testing_2:
+  subaccount: testing_2
+  api_key: xxxxxxx
+  api_secret: xxxxxxxx
+testing_3:
+  subaccount: testing_3
+  api_key: xxxxxxx
+  api_secret: xxxxxx
+testing_4:
+  subaccount: testing_4
+  api_key: xxxxx
+  api_secret: xxxxx
+  read_only_key: xxxxxxx
+  read_only_secret: xxxxxx
